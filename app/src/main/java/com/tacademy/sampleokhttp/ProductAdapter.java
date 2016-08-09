@@ -1,5 +1,6 @@
 package com.tacademy.sampleokhttp;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +18,12 @@ import java.util.List;
 public class ProductAdapter extends RecyclerView.Adapter<ProductListViewHolder>
         implements ProductListViewHolder.OnProductItemClickListener {
 
+    Context context;
     List<Product> items = new ArrayList<>();
+
+    public ProductAdapter(Context context) {
+        this.context = context;
+    }
 
     public void add(Product p) {
         items.add(p);
@@ -39,7 +45,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductListViewHolder>
 
     @Override
     public void onBindViewHolder(ProductListViewHolder holder, int position) {
-        holder.setProduct(items.get(position));
+        holder.setProduct(context, items.get(position));
     }
 
     @Override

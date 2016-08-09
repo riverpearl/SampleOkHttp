@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        pAdapter = new ProductAdapter();
+        pAdapter = new ProductAdapter(this);
         pAdapter.setOnProductAdapterItemClickListener(new ProductAdapter.OnProductAdapterItemClickListener() {
             @Override
             public void onProductAdapterItemClick(View view, Product product, int position) {
