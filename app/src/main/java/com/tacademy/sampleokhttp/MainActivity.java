@@ -10,6 +10,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tacademy.sampleokhttp.autodata.Product;
+import com.tacademy.sampleokhttp.autodata.Tstore;
+import com.tacademy.sampleokhttp.manager.OkHttpManager;
+import com.tacademy.sampleokhttp.manager.OkHttpRequest;
+import com.tacademy.sampleokhttp.manager.TstoreSearchOkHttpRequest;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,6 +50,21 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.btn_search)
     public void onSearch(View view) {
+        String keyword = keywordView.getText().toString();
 
+        if (!TextUtils.isEmpty(keyword)) {
+            TstoreSearchOkHttpRequest request = new TstoreSearchOkHttpRequest(keyword);
+            OkHttpManager.getInstance().getNetworkData(request, new OkHttpManager.OnResultListener<Tstore>() {
+                @Override
+                public void onSuccess(OkHttpRequest<Tstore> request, Tstore result) {
+                    pAdapter.addAll(result.getProducts().getProduct());
+                }
+
+                @Override
+                public void onFail(OkHttpRequest<Tstore> request, int errorCode, String errorMessage, Throwable e) {
+                    Toast.makeText(MainActivity.this, "fail", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 }
